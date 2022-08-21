@@ -9,12 +9,10 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       email: {
-        type: Sequelize.STRING,
-        unique: true,
+        type: Sequelize.STRING
       },
       nickname: {
-        type: Sequelize.STRING,
-        unique: true,
+        type: Sequelize.STRING
       },
       password: {
         type: Sequelize.STRING
@@ -25,6 +23,14 @@ module.exports = {
       profile: {
         type: Sequelize.STRING
       },
+      createdAt: {
+        allowNull: false,
+        type: Sequelize.DATE
+      },
+      updatedAt: {
+        allowNull: false,
+        type: Sequelize.DATE
+      }
     });
   },
   async down(queryInterface, Sequelize) {
