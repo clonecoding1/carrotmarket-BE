@@ -1,52 +1,50 @@
 const jwt = require("jsonwebtoken");
 const UserRepository = require("../repositories/user.repositoriory");
-
+const bcrypt = require('bcrypt');
 
 class UserService {
     userRepository = new UserRepository();
 
     signup = async (email, nickname, password, profile, location) => {
-        try {
-            await this.userRepository.signup(email, nickname, password, profile, location);
-
-        } catch {
-
-        }
+        // const passwords = await bcrypt.hashSync(password, 10);// 암호화하기
+        await this.userRepository.signup(email, nickname, password, profile, location);
+        return {message : "회원가입이 완료되었습니다."}
     };
 
     login = async (email, password) => {
-      try {
             const userInfo = await this.userRepository.login(email, password);
-
             if (userInfo) {
-                // const SECRET_KEY = process.env.SECRET_KEY;
-                const isSame = bcrypt.compareSync(password, userInfo.password);
-          
+                // const isSame = bcrypt.compareSync(password, userInfo.password);// 보안 더 강화
+                const isSame = userInfo
                 if (isSame) {
                   const payload = {
                     nickname: userInfo.nickname,
                     userId: userInfo.userId,
                     // 기한 정하기
                   };
-                  const token = jwt.sign(payload, SECRET_KEY);
+                  const token = jwt.sign(payload, "SECRET_KEY");
                   return token;
-                } else
-                  throw new UnauthorizedException("사용자 정보가 일치 하지 않습니다.");
-              } else throw new UnauthorizedException("사용자 정보가 일치 하지 않습니다.");
-          
-      } catch {
-
-      }
+                } else {
+                  throw Error("사용자 정보가 1일치 하지 않습니다.");
+                }
+            } else {
+              throw Error("아이디 혹은 비밀번호가 일치하지 않습니다");
+            }
     };
 
     checkemail = async (email) => {
-        try {
-            await this.userRepository.checkemail(email);
-
-        } catch {
-
-        }
+            const check = await this.userRepository.checkemail(email);
+            if(check){
+              throw Error("중복된 이메일입니다.");
+            }
     };
+    
+    checknickname = async (nickname) => {
+        const check = await this.userRepository.checkemail(nickname);
+        if(check){
+          throw Error("중복된 닉네임입니다.");
+        }
+  };
 
 };
 
