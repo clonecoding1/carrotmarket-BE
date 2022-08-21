@@ -1,4 +1,5 @@
 const Userservice = require("../services/user.service");
+const exceptionHandler = require("../errorhandler/exception.handler");
 
 class UserController {
     userService = new Userservice();
@@ -10,7 +11,9 @@ class UserController {
 
             return res.status(201).send(result);
         } catch {
+            const exception = exceptionHandler(err);
 
+            return res.status(exception.statusCode).json(exception.message);
         }
     };
 
@@ -19,9 +22,11 @@ class UserController {
         try {
             const token = await this.userService.login(email, password);
 
-            return res.status(201).send(token);
+            return res.status(201).json(token);
         } catch {
+            const exception = exceptionHandler(err);
 
+            return res.status(exception.statusCode).json(exception.message);
         }
     };
 
@@ -32,9 +37,25 @@ class UserController {
 
             return res.status(200).send(result);
         } catch {
+            const exception = exceptionHandler(err);
 
+            return res.status(exception.statusCode).json(exception.message);
         }
     };
+    
+    checknickname = async (req, res, next) => {
+        const { nickname } = req.body;
+        try {
+            const result = await this.userService.checkemail(nickname);
+
+            return res.status(200).send(result);
+        } catch {
+            const exception = exceptionHandler(err);
+
+            return res.status(exception.statusCode).json(exception.message);
+        }
+    };
+
 
 }
 

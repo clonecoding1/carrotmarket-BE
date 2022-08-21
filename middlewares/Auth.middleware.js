@@ -6,7 +6,7 @@ module.exports = (req, res, next) => {
     const [tokenType, tokenValue] = authorization.split(" ");
     if (tokenType !== "Bearer") return res.send("존재하지 않는 정보입니다.//토큰 타입이 다르다.");
     try {
-      const userInfo = jwt.verify(tokenValue, SECRET_KEY);
+      const userInfo = jwt.verify(tokenValue, "SECRET_KEY");
       res.locals.userId = userInfo.userId;
       res.locals.nickname = userInfo.nickname;
     } catch (err) {
