@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+
 const PostController = require("../controllers/post.controller");
 const postController = new PostController();
 
@@ -14,5 +15,6 @@ router.get("/post/:postId",postController.findOnePost);
 
 //게시글 삭제
 router.delete("/post/:postId",postController.deletePost);
+
 
 module.exports = router;
