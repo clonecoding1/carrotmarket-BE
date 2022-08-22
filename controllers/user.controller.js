@@ -9,7 +9,7 @@ class UserController {
             const result = await this.userService.signup(email, nickname, password, profile, location);
             return res.status(result.status).send(result.message);
         } catch {
-            return res.status(400).json();
+            return res.status(400).json("알 수 없는 오류");
         }
     };
 

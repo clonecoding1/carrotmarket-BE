@@ -6,10 +6,21 @@ const env = process.env;
 class UserService {
     userRepository = new UserRepository();
 
-    signup = async (email, nickname, password, profile, location) => {
-        const passwords = await bcrypt.hashSync(password, 10);// 암호화하기
-        await this.userRepository.signup(email, nickname, passwords, profile, location);
-        return {status: 201, message : "회원가입이 완료되었습니다."}
+    signup = async (email, nickname, password, profile, location) => {//로그인이 되어 있다면??
+      if (!email || !nickname || !password){
+        return {status: 400, message : "email, nickname, password중에 입력값이 비어 있습니다."}
+      }
+      if (!profile || !location){
+        return {status: 400, message : "profile, location중에 입력값이 비어 있습니다."}
+      }
+        const passwords = await bcrypt.hashSync(password, 10);
+      try {
+        const result = await this.userRepository.signup(email, nickname, passwords, profile, location);
+        
+      } catch {
+        return {status: 400, message : "db에 유저정보 생성에 실패했습니다."}
+      }
+      return {status: 201, message : "회원가입이 완료되었습니다."}
     };
 
     login = async (email, password) => {
