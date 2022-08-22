@@ -27,9 +27,9 @@ class UserController {
     checkemail = async (req, res, next) => {
         const { email } = req.body;
         try {
-            await this.userService.checkemail(email);
+            const result = await this.userService.checkemail(email);
 
-            return res.status(200).send(" 중복된 메일이 없을 때");
+            return res.status(200).send(result);
         } catch {
             return res.status(400).json();
         }
@@ -38,9 +38,9 @@ class UserController {
     checknickname = async (req, res, next) => {
         const { nickname } = req.body;
         try {
-            await this.userService.checkemail(nickname);
+            const result = await this.userService.checkemail(nickname);
 
-            return res.status(200).send(" 중복된 닉네임이 없을 때");
+            return res.status(200).send(result);
         } catch {
             return res.status(400).json();
         }
