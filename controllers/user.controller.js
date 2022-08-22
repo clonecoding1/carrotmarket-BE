@@ -33,20 +33,20 @@ class UserController {
         try {
             const result = await this.userService.checkemail(email);
 
-            return res.status(200).send(result);
+            return res.status(result.status).json(result.message);
         } catch {
-            return res.status(400).json();
+            return res.status(400).json("알 수 없는 오류");
         }
     };
-    
+
     checknickname = async (req, res, next) => {
         const { nickname } = req.body;
         try {
             const result = await this.userService.checkemail(nickname);
 
-            return res.status(200).send(result);
+            return res.status(result.status).json(result.message);
         } catch {
-            return res.status(400).json();
+            return res.status(400).json("알 수 없는 오류");
         }
     };
 
