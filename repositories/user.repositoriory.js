@@ -2,17 +2,18 @@ const { User } = require("../models");
 
 class UserRepository {
 
-    signup = async (email, nickname, password, profile, location) => {
+    signup = async (email, nickname, passwords, profile, location) => {
         try {
-            await User.create({email, nickname, password, profile, location});
+            await User.create({email, nickname, password:passwords, profile, location});
         } catch {
             throw Error ({message : "유저정보를 db에 생성에 실패했습니다."}) ;
         }
     };
 
-    login = async (email, password) => {
+    login = async (email) => {
         try {
-            const user = await User.findOne({ where: {email, password}});
+            const user = await User.findOne({ where: {email}});
+            console.log(user)
             return user
         } catch {
             throw Error ({message : "유저정보를 db에서 조회실패."}) ;
