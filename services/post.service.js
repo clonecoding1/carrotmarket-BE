@@ -1,4 +1,5 @@
 const PostRepository = require("../repositories/post.repository");
+const bcrypt = require("bcrypt");
 
 class PostService {
     postRepository = new PostRepository();
@@ -9,12 +10,12 @@ class PostService {
 
         const Posts = allPost.posts.map((post, idx) => {
             return {
-                postId: post.postId,
+                postId: post.id,
                 img: post.img,
                 title: post.title,
                 price: post.price,
                 createdAt: post.createdAt,
-                like: allPost.like[idx],
+                // like: allPost.like[idx],
             };
         });
         Posts.sort((a, b) => {
@@ -29,13 +30,17 @@ class PostService {
     //postId로 하나의 특정 게시글 반환
     findOnePost = async (postId) => {
         const findPostData = await this.postRepository.findOnePost(postId);
-
+        
         const post = {
-            postId : findPostData.postId,
+            postId : findPostData.id,
             img : findPostData.img,
             title : findPostData.title,
             price : findPostData.price,
-            content : findPostData.content
+            content : findPostData.content,
+            createdAt : findPostData.createdAt,
+            nickname : findPostData.User.nickname,
+            profile : findPostData.User.profile,
+            location : findPostData.User.location
         };
         return{
             post,
@@ -43,13 +48,13 @@ class PostService {
         };
     };
     //게시글 생성
-    createPost =  async ( img, title, content, price,userId ) => {
+    createPost =  async ( img, title, content, price,userId) => {
         await this.postRepository.createPost(
             img,
             title,
             content,
             price,
-            userId
+            userId,
         );
         return {
             status: 201,
@@ -59,14 +64,35 @@ class PostService {
 
 
     //게시글 삭제
-    deletePost = async (postId,password) => {
-        if (!(await this.postRepository.checkPw(PostId,pw))){
+    deletePost = async (postId,password,userId) => {
+        const checkPw =await this.postRepository.checkPw(postId,password)
+        console.log(checkPw)
+        console.log(postId)
+        if (postId === null){
+            return {
+                status:400,
+                msg:"게시글이 존재하지 않습니당근."
+            };
+        };
+        if (postId !== userId){
+            return {
+                status:400,
+                msg:"본인 게시글이 아닙니당근."
+            };
+        };
+        if (checkPw.checkPw !== password){
             return {
                 status:400,
                 msg:"비밀번호가 회원정보와 일치하지 않습니당근."
             };
-        }
-        await this.postRepository.deletePost( postId, password );
+        };
+
+
+        
+        //const destroy =  await this.postRepository.deletePost( postId, password );
+        if (destroy === 0) {
+            return {status:400, msg:"알수없는 에러(feat.용성령)"}
+        };
         return {
             status:200,
             msg: "게시물이 삭제되었습니당근.",

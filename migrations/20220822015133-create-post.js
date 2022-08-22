@@ -2,7 +2,7 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('Posts', {
-      postId: {
+      id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
@@ -20,9 +20,6 @@ module.exports = {
       price: {
         type: Sequelize.STRING
       },
-      userId: {
-        type:Sequelize.STRING
-      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
@@ -30,7 +27,7 @@ module.exports = {
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE
-      }
+      },
     });
   },
   async down(queryInterface, Sequelize) {

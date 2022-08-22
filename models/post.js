@@ -2,6 +2,7 @@
 const {
   Model
 } = require('sequelize');
+//const { foreginkey } = require('sequelize/types/query-types');
 module.exports = (sequelize, DataTypes) => {
   class Post extends Model {
     /**
@@ -14,16 +15,25 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Post.init({
-    postId: { primaryKey: true, type: DataTypes.INTEGER },
+    id: {
+      allowNull: false,
+      autoIncrement: true,
+      primaryKey: true,
+      type: DataTypes.INTEGER,
+    },
     img: DataTypes.STRING,
     title: DataTypes.STRING,
     content: DataTypes.STRING,
-    price: DataTypes.STRING,
-    like: DataTypes.INTEGER,
-    userId: DataTypes.INTEGER,
+    price: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Post',
+});
+Post.associate = function (models) {
+  Post.belongsTo(models.User, {
+    foreginkey:'id',
+    onDelete: 'cascade'
   });
+};
   return Post;
 };

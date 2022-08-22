@@ -18,9 +18,8 @@ class UserService {
                 const isSame = userInfo
                 if (isSame) {
                   const payload = {
-                    nickname: userInfo.nickname,
-                    userId: userInfo.userId,
-                    // 기한 정하기
+                    userId:userInfo.id,
+                    nickname: userInfo.nickname
                   };
                   const token = jwt.sign(payload, "SECRET_KEY");
                   return token;
