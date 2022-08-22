@@ -4,7 +4,7 @@ const PostController = require("../controllers/post.controller");
 const postController = new PostController();
 
 //게시글 전체조회(메인페이지)
-router.get("/post?offset={}",postController.findAllPost);
+router.get("/post",postController.findAllPost);
 
 //게시글 작성
 router.post("/post",postController.createPost);

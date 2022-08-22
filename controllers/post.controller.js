@@ -6,6 +6,7 @@ class PostController{
 
     //게시글 목록조회(메인페이지)
     findAllPost = async (req, res) => {
+        const { offset } = req.query;
         const allPost = await this.postService.findAllPost();
 
         res.status(200).json({ allPost });
