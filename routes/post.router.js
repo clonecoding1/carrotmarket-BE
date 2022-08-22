@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-
+const auth = require("../middlewares/Auth.middleware")
 const PostController = require("../controllers/post.controller");
 const postController = new PostController();
 
@@ -8,13 +8,13 @@ const postController = new PostController();
 router.get("/post",postController.findAllPost);
 
 //게시글 작성
-router.post("/post",postController.createPost);
+router.post("/post", auth,postController.createPost);
 
 //게시글 조회
-router.get("/post/:postId",postController.findOnePost);
+router.get("/post/:postId",auth,postController.findOnePost);
 
 //게시글 삭제
-router.delete("/post/:postId",postController.deletePost);
+router.delete("/post/:postId",auth,postController.deletePost);
 
 
 module.exports = router;

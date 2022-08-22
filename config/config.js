@@ -4,7 +4,7 @@ const env = process.env;
 const development = {
     username: env.DB_USER,
     password: env.DB_PASS,
-    database: "carrotmarket",
+    database: "database_development",
     host: env.DB_HOST,
     dialect: "mysql",
     timezone: "+09:00",
