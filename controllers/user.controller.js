@@ -7,7 +7,7 @@ class UserController {
         const { email, nickname, password, profile, location } = req.body;
         try {
             const result = await this.userService.signup(email, nickname, password, profile, location);
-            return res.status(201).send(result);
+            return res.status(result.status).send(result.message);
         } catch {
             return res.status(400).json();
         }

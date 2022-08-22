@@ -8,7 +8,7 @@ class UserService {
     signup = async (email, nickname, password, profile, location) => {
         const passwords = await bcrypt.hashSync(password, 10);// 암호화하기
         await this.userRepository.signup(email, nickname, passwords, profile, location);
-        return {message : "회원가입이 완료되었습니다."}
+        return {status: 201, message : "회원가입이 완료되었습니다."}
     };
 
     login = async (email, password) => {
