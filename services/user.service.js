@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 const UserRepository = require("../repositories/user.repositoriory");
 const bcrypt = require('bcrypt');
+const env = process.env;
 
 class UserService {
     userRepository = new UserRepository();
@@ -20,7 +21,7 @@ class UserService {
                 userId: userInfo.id,
                 nickname: userInfo.nickname,
               };
-              const token = jwt.sign(payload, "SECRET_KEY");
+              const token = jwt.sign(payload, env.SECRET_KEY);
               return token;
             } else {
               throw Error("아이디 혹은 비밀번호가 일치하지 않습니다");
