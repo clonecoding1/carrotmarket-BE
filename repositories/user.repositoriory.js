@@ -7,12 +7,7 @@ class UserRepository {
     };
 
     login = async (email) => {
-        try {
-            const user = await User.findOne({ where: {email}});
-            return user
-        } catch {
-            throw Error ({message : "유저정보를 db에서 조회실패."}) ;
-        }
+            return await User.findOne({ where: {email}});
     };
 
     checkemail = async (email) => {

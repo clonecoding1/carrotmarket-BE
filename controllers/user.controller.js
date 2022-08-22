@@ -5,8 +5,9 @@ class UserController {
 
     signup = async (req, res, next) => {
         const { email, nickname, password, profile, location } = req.body;
+        const { authorization } = req.headers;
         try {
-            const result = await this.userService.signup(email, nickname, password, profile, location);
+            const result = await this.userService.signup(email, nickname, password, profile, location, authorization);
             return res.status(result.status).send(result.message);
         } catch {
             return res.status(400).json("알 수 없는 오류");
@@ -15,12 +16,15 @@ class UserController {
 
     login = async (req, res, next) => {
         const { email, password } = req.body;
+        const { authorization } = req.headers;
         try {
-            const token = await this.userService.login(email, password);
-
-            return res.status(201).json(token);
+            const result = await this.userService.login(email, password, authorization);
+            if (result.status === 201) {
+                return res.status(result.status).json(result.dete);
+            }
+            return res.status(result.status).json(result.message);
         } catch {
-            return res.status(400).json();
+            return res.status(400).json("알 수 없는 오류");
         }
     };
 
