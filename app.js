@@ -11,7 +11,7 @@ app.use("/", router);
 app.use(cors());
 
 // const whitelist = ["http://localhost:3000" ];
-// // const whitelist = ["http://prac-ye.s3-website.ap-northeast-2.amazonaws.com"];
+// const whitelist = ["http://prac-ye.s3-website.ap-northeast-2.amazonaws.com"];
 
 
 // const corsOptions = {
