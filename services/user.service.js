@@ -18,7 +18,7 @@ class UserService {
     }
     const passwords = await bcrypt.hashSync(password, 10);
     try {
-      const result = await this.userRepository.signup(email, nickname, passwords, profile, location);
+      await this.userRepository.signup(email, nickname, passwords, profile, location);
 
     } catch {
       return { status: 400, message: "db에 유저정보 생성에 실패했습니다." }
