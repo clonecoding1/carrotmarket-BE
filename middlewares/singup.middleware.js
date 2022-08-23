@@ -15,6 +15,7 @@ module.exports = async (req, res, next) => {
         /^.*(?=^.{8,}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/
       )
     ),
+    confirmPassword: Joi.string(),
     profile: Joi.string(),
     location: Joi.string(),
   });
