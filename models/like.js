@@ -2,9 +2,8 @@
 const {
   Model
 } = require('sequelize');
-//const { foreginkey } = require('sequelize/types/query-types');
 module.exports = (sequelize, DataTypes) => {
-  class Post extends Model {
+  class Like extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -14,30 +13,26 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
-  Post.init({
+  Like.init({
     id: {
       allowNull: false,
       autoIncrement: true,
       primaryKey: true,
       type: DataTypes.INTEGER,
     },
-    img: DataTypes.STRING,
-    title: DataTypes.STRING,
-    content: DataTypes.STRING,
-    price: DataTypes.STRING
   }, {
     sequelize,
-    modelName: 'Post',
-});
-Post.associate = function (models) {
-  Post.belongsTo(models.User, {
-    foreginkey:'id',
-    onDelete: 'cascade'
+    modelName: 'Like',
   });
-  Post.hasMany(models.Like,{
-    foreginkey:'id',
-    onDelete: 'cascade'
-  });
-};
-  return Post;
+  Like.associate = function (models) {
+    Like.belongsTo(models.User, {
+      foreginkey:'id',
+      onDelete: 'cascade'
+    });
+    Like.belongsTo(models.Post, {
+      foreginkey:'id',
+      onDelete: 'cascade'
+    });
+  };
+  return Like;
 };

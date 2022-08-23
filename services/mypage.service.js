@@ -6,7 +6,64 @@ class MypageService {
     
     myinfo = async ( userId ) => {
         const userdate = await this.mypageRepository.myinfo( userId )
+        const dete = {
+            user: {
+                userId: userdate.id,
+                email: userdate.email,
+                nickname: userdate.nickname,
+                location: userdate.location,
+                profile: userdate.profile,
+            }
+        }
+        return {status:200, message:"db에서 회원정보 조회중 오류"}
+    }
+
+    mypage = async ( userId ) => {
+        const userdate = await this.mypageRepository.myinfo( userId )
         const postlist = await this.mypageRepository.mypagelest( userId )
+        console.log(postlist)
+        const dete = {
+            user: {
+                userId: userdate.id,
+                email: userdate.email,
+                nickname: userdate.nickname,
+                location: userdate.location,
+                profile: userdate.profile,
+            }
+        }
+        const likelist = postlist.map(post => {
+            return {
+                postId: post.postId,
+                title: post.title,
+                nickname: post.User.nickname,
+                createdAt: post.createdAt,
+            }
+        });
+
+    }
+
+    likelist = async ( userId ) => {
+        const userdate = await this.mypageRepository.myinfo( userId )
+        const postlist = await this.mypageRepository.mypagelest( userId )
+        console.log(postlist)
+        const dete = {
+            user: {
+                userId: userdate.id,
+                email: userdate.email,
+                nickname: userdate.nickname,
+                location: userdate.location,
+                profile: userdate.profile,
+            }
+        }
+        const likelist = postlist.map(post => {
+            return {
+                postId: post.postId,
+                title: post.title,
+                nickname: post.User.nickname,
+                createdAt: post.createdAt,
+            }
+        });
+
     }
 
     Withdrawal = async ( userId ) => {
@@ -20,6 +77,21 @@ class MypageService {
         }
         await this.mypageRepository.Withdrawal( userId )
         return {status:200, message:"회원 가입 탈퇴"}
+    }
+
+    like = async ( postId, userId ) => {
+        const postcheck = await this.mypageRepository.postcheck( postId )
+        if (!postcheck){
+            return {status:400, message:"존재하지 않는 게시글입니다."}
+        }
+        const date = await this.mypageRepository.likefind( postId, userId )
+        if(!date){
+            await this.mypageRepository.likecreate( postId, userId )
+            return {status:201, message:"관심 목록에 추가되었습니다."}
+        }else{
+            await this.mypageRepository.likedestroy( postId, userId )
+            return {status:200, message:"관심 목록에 제거되었습니다."}
+        }
     }
 
 };
