@@ -1,5 +1,4 @@
 const { Like, Post ,User} = require("../models")
-const { post } = require("../routes/post.router");
 const bcrypt = require("bcrypt");
 
 

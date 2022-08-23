@@ -6,7 +6,7 @@ module.exports = (req, res, next) => {
     const [tokenType, tokenValue] = (authorization || "").split(" ");
     
     if(tokenType !== "Bearer"){
-        res.status(400).json(false)
+        res.status(400).json()
     } else {
         const user = jwt.verify(tokenValue, "SECRET_KEY");
         res.locals.userId = user.userId;
