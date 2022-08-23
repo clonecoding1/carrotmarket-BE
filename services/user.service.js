@@ -6,7 +6,7 @@ const env = process.env;
 class UserService {
   userRepository = new UserRepository();
 
-  signup = async (email, nickname, password, profile, location, authorization) => {//로그인이 되어 있다면??
+  signup = async (email, nickname, password, profile, location, authorization) => {
     if (authorization) {
       return { status: 401, message: "로그인 되어 있습니다." }
     }

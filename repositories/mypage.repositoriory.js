@@ -8,7 +8,32 @@ class MypageRepository {
     }
 
     mypagelest = async ( userId ) => {
-        return await Post.findAll()
+        return await Post.findAll({
+            where :{ UserId:userId },
+            include:[{
+                model:User,
+                attributes:['nickname','location'],
+            },{
+                model:Like,
+                attributes:['UserId'],
+            }]
+        })
+    }
+
+    likelist = async ( userId ) => {
+        return await Like.findAll({
+            where :{ id:userId },
+            include:[{
+                model:Post,
+                attributes:['postId','img','title','price']
+            },{
+                model:User,
+                attributes:['nickname','location'],
+            },{
+                model:Like,
+                attributes:['UserId'],
+            }]
+        })
     }
 
     Withdrawal = async ( userId ) => {

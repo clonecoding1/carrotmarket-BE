@@ -7,7 +7,10 @@ class MypageController {
         const { userId } = res.locals;
         try {
             const date = await this.mypageservice.myinfo(userId);
-            return res.status(date).json(date);
+            if(date.status==200){
+                return res.status(date.status).json(date.dete)
+            }
+            return res.status(date.status).send(date.message)//에러처리 할게 없으면 삭제
         } catch {
             return res.status(400).json("알 수 없는 오류");
         }
@@ -17,7 +20,10 @@ class MypageController {
         const { userId } = res.locals;
         try {
             const date = await this.mypageservice.mypage(userId);
-            return res.status(date).json(date);
+            if(date.status==200){
+                return res.status(date.status).json(date.mypage)
+            }
+            return res.status(date.status).send(date.message)
         } catch {
             return res.status(400).json("알 수 없는 오류");
         }
@@ -27,7 +33,10 @@ class MypageController {
         const { userId } = res.locals;
         try {
             const date = await this.mypageservice.likelist(userId);
-            return res.status(date).json(date);
+            if(date.status==200){
+                return res.status(date.status).json(date.likelist)
+            }
+            return res.status(date.status).send(date.message)
         } catch {
             return res.status(400).json("알 수 없는 오류");
         }

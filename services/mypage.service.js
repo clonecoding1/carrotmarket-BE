@@ -15,55 +15,42 @@ class MypageService {
                 profile: userdate.profile,
             }
         }
-        return {status:200, message:"db에서 회원정보 조회중 오류"}
+        return {status:200, dete }
     }
 
     mypage = async ( userId ) => {
-        const userdate = await this.mypageRepository.myinfo( userId )
         const postlist = await this.mypageRepository.mypagelest( userId )
-        console.log(postlist)
-        const dete = {
-            user: {
-                userId: userdate.id,
-                email: userdate.email,
-                nickname: userdate.nickname,
-                location: userdate.location,
-                profile: userdate.profile,
-            }
-        }
-        const likelist = postlist.map(post => {
-            return {
-                postId: post.postId,
+        const mypage = postlist.map(post => {
+            return { mypage:{
+                postId: post.id,
+                img: post.img,
                 title: post.title,
+                price: post.price,
                 nickname: post.User.nickname,
-                createdAt: post.createdAt,
+                location: post.User.location,
+                likeCount: post.Likes.length
+                }
             }
         });
-
+        return {status:200, mypage }
     }
 
     likelist = async ( userId ) => {
-        const userdate = await this.mypageRepository.myinfo( userId )
         const postlist = await this.mypageRepository.mypagelest( userId )
         console.log(postlist)
-        const dete = {
-            user: {
-                userId: userdate.id,
-                email: userdate.email,
-                nickname: userdate.nickname,
-                location: userdate.location,
-                profile: userdate.profile,
-            }
-        }
         const likelist = postlist.map(post => {
-            return {
-                postId: post.postId,
+            return { likelist:{
+                postId: post.id,
+                img: post.img,
                 title: post.title,
+                price: post.price,
                 nickname: post.User.nickname,
-                createdAt: post.createdAt,
+                location: post.User.location,
+                likeCount: post.Likes.length
+                }
             }
         });
-
+        return {status:200, likelist }
     }
 
     Withdrawal = async ( userId ) => {
