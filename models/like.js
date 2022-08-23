@@ -27,10 +27,12 @@ module.exports = (sequelize, DataTypes) => {
   Like.associate = function (models) {
     Like.belongsTo(models.User, {
       foreginkey:'id',
+      targetKey:"id",
       onDelete: 'cascade'
     });
     Like.belongsTo(models.Post, {
       foreginkey:'id',
+      targetKey:"id",
       onDelete: 'cascade'
     });
   };

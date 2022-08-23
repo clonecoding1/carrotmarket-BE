@@ -42,7 +42,7 @@ module.exports = (sequelize, DataTypes) => {
   });
   User.associate = function (models) {
     User.hasMany(models.Post,{
-        foreignKey: 'id',
+        foreginkey:'id',
         onDelete: 'cascade'
     });
     User.hasMany(models.Like,{
