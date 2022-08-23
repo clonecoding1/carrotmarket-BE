@@ -38,6 +38,10 @@ Post.associate = function (models) {
   Post.belongsToMany(models.User,{
     foreginkey:'id',
     through:'Like'
+
+  Post.hasMany(models.Like,{
+    foreginkey:'id',
+    onDelete: 'cascade'
   });
 };
   return Post;

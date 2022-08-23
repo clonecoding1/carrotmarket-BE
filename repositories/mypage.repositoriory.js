@@ -1,5 +1,6 @@
 const { User } = require("../models");
 const { Post } = require("../models");
+const { Like } = require("../models");
 class MypageRepository {
     
     myinfo = async ( userId ) => {
@@ -7,11 +8,53 @@ class MypageRepository {
     }
 
     mypagelest = async ( userId ) => {
-        return await Post.findAll()
+        return await Post.findAll({
+            where :{ UserId:userId },
+            include:[{
+                model:User,
+                attributes:['nickname','location'],
+            },{
+                model:Like,
+                attributes:['UserId'],
+            }]
+        })
+    }
+
+    likelist = async ( userId ) => {
+        return await Like.findAll({
+            where :{ id:userId },
+            include:[{
+                model:Post,
+                attributes:['postId','img','title','price']
+            },{
+                model:User,
+                attributes:['nickname','location'],
+            },{
+                model:Like,
+                attributes:['UserId'],
+            }]
+        })
     }
 
     Withdrawal = async ( userId ) => {
         await User.destroy({where :{ id:userId }})
+    }
+
+    postcheck = async ( postId ) => {
+        return await Post.findOne({where :{ id:postId }})
+    }
+
+    likecreate = async ( postId, userId ) => {
+        await Like.create({ PostId:postId, UserId:userId })
+    }
+
+    likefind = async ( postId, userId ) => {
+        return await Like.findOne({where :{ PostId:postId, UserId:userId }})
+  
+    }
+
+    likedestroy = async ( postId, userId ) => {
+        await Like.destroy({where :{ PostId:postId, UserId:userId }})
     }
     
 };

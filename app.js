@@ -6,7 +6,8 @@ const app = express();
 const port = 3000;
 const cors = require("cors");
 const { sequelize } = require("./models");
- //sequelize.sync({ force: true });
+
+//  sequelize.sync({ force: true });
 
 app.use(express.json());
 app.use(cors());
