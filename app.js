@@ -4,10 +4,9 @@ const app = express();
 const port = 3000;
 const cors = require("cors");
 const { sequelize } = require("./models");
-// sequelize.sync({ force: true });
+ //sequelize.sync({ force: true });
 
 app.use(express.json());
-app.use("/", router);
 app.use(cors());
 
 // const whitelist = ["http://localhost:3000" ];
