@@ -31,6 +31,7 @@ class PostRepository {
 
     //게시글 생성
     createPost = async ( img, title, content, price, userId) => {
+
         const createPostData = await Post.create({
             img,
             title,
