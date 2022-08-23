@@ -6,10 +6,11 @@ module.exports = (req, res, next) => {
     const [tokenType, tokenValue] = (authorization || "").split(" ");
     
     if(tokenType !== "Bearer"){
-        res.status(400).json()
+        res.send({message:"비회원입니다"})
     } else {
-        const user = jwt.verify(tokenValue, "SECRET_KEY");
+        const user = jwt.verify(tokenValue, "market");
         res.locals.userId = user.userId;
+        res.locals.nickname = user.nickname;
     };
     next();
 

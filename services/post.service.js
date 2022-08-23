@@ -5,10 +5,9 @@ class PostService {
     postRepository = new PostRepository();
     
     //모든 게시글 조회. 데이터를 가져와 반환
-    findAllPost = async (userId) => {
+    findAllPost = async (userId,nickname) => {
         const allPost = await this.postRepository.findAllPost();
         
-        console.log(userId)
         const Posts = allPost.posts.map((post, idx) => {
             
             return {
@@ -17,12 +16,14 @@ class PostService {
                 title: post.title,
                 price: post.price,
                 createdAt: post.createdAt,
+                userId,
+                nickname
                 // like: allPost.like[idx],
             };
         });
         Posts.sort((a, b) => {
             return b.createdAt - a.createdAt;
-        });
+        });console.log(Posts)
         return {
             Posts,
             status: 200,

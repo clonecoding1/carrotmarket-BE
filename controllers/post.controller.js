@@ -7,9 +7,9 @@ class PostController{
     //게시글 목록조회(메인페이지)
     findAllPost = async (req, res) => {
         const { offset } = req.query;
-        const { userId } = res.locals;
-        console.log(userId)
-        const allPost = await this.postService.findAllPost(userId);
+        const { userId,nickname } = res.locals;
+        
+        const allPost = await this.postService.findAllPost(userId,nickname);
         
         res.status(200).json({ allPost });
     };
