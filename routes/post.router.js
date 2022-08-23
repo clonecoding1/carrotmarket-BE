@@ -6,7 +6,7 @@ const PostController = require("../controllers/post.controller");
 const postController = new PostController();
 
 //게시글 전체조회(메인페이지)
-router.get("/", heart,postController.findAllPost);
+router.get("/", postController.findAllPost);
 
 //게시글 작성
 router.post("/", auth,postController.createPost);
