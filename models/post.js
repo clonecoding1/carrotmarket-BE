@@ -31,6 +31,7 @@ module.exports = (sequelize, DataTypes) => {
 Post.associate = function (models) {
   Post.belongsTo(models.User, {
     foreginkey:'id',
+    targetKey:"id",
     onDelete: 'cascade'
   });
   Post.hasMany(models.Like,{
