@@ -2,6 +2,7 @@
 const {
   Model
 } = require('sequelize');
+const { post } = require('../routes/post.router');
 //const { foreginkey } = require('sequelize/types/query-types');
 module.exports = (sequelize, DataTypes) => {
   class Post extends Model {
@@ -34,6 +35,10 @@ Post.associate = function (models) {
     foreginkey:'id',
     onDelete: 'cascade'
   });
+  Post.belongsToMany(models.User,{
+    foreginkey:'id',
+    through:'Like'
+
   Post.hasMany(models.Like,{
     foreginkey:'id',
     onDelete: 'cascade'
