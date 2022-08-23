@@ -5,10 +5,12 @@ class PostService {
     postRepository = new PostRepository();
     
     //모든 게시글 조회. 데이터를 가져와 반환
-    findAllPost = async () => {
+    findAllPost = async (userId) => {
         const allPost = await this.postRepository.findAllPost();
-
+        
+        console.log(userId)
         const Posts = allPost.posts.map((post, idx) => {
+            
             return {
                 postId: post.id,
                 img: post.img,
@@ -30,6 +32,7 @@ class PostService {
     //postId로 하나의 특정 게시글 반환
     findOnePost = async (postId) => {
         const findPostData = await this.postRepository.findOnePost(postId);
+        new Date(findPostData.createdAt);
         
         const post = {
             postId : findPostData.id,
@@ -37,7 +40,7 @@ class PostService {
             title : findPostData.title,
             price : findPostData.price,
             content : findPostData.content,
-            createdAt : findPostData.createdAt,
+            createdAt : new Date(findPostData.createdAt).getTime(),
             nickname : findPostData.User.nickname,
             profile : findPostData.User.profile,
             location : findPostData.User.location
