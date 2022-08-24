@@ -3,11 +3,11 @@ const { User } = require("../models");
 class UserRepository {
 
     signup = async (email, nickname, passwords, profile, location) => {
-        await User.create({ email, nickname, password: passwords, profile, location });
+        await User.create({ email, nickname, password: passwords, profile, location, kakao:"folse" });
     };
 
-    login = async (email, passwords) => {
-        return await User.findOne({ where: { email, password: passwords } });
+    login = async (email) => {
+        return await User.findOne({ where: { email, kakao:"folse" } });
     };
 
     checkemail = async (email) => {
@@ -18,9 +18,13 @@ class UserRepository {
         return await User.findOne({ where: { nickname } });
     };
 
-    kakaosignup = async (email, nickname, passwords, profile, location) => {
-        await User.create({ email, nickname, password: passwords, profile, location });
-        return await User.findOne({ where: { email, password: passwords } });
+    kakaologin = async (email, password) => {
+        return await User.findOne({ where: { email, password, kakao:"true" } });
+    };
+
+    kakaosignup = async (email, nickname, password, profile, location) => {
+        await User.create({ email, nickname, password, profile, location, kakao:"true" });
+        return await User.findOne({ where: { email, password, kakao:"true" } });
     }
 };
 

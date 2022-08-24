@@ -34,7 +34,8 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
     },
     location: DataTypes.STRING,
-    profile: DataTypes.STRING
+    profile: DataTypes.STRING,
+    kakao: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'User',
