@@ -24,8 +24,8 @@ class PostService {
             };
         });
         Posts.sort((a, b) => {
-            return b.createdAt - a.createdAt;
-        });console.log(Posts)
+            return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+        });
         return {
             Posts, 
             status: 200,
