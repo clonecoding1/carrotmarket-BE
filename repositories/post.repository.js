@@ -9,12 +9,12 @@ class PostRepository {
         });
         const like = [];
         
-        for ( let i = 0; i< posts.length; i++ );{
-            const temp = await Like.findAll({
-                where : { postId: posts[i].postId},
-            });
-            like.push(temp.length);
-        };
+        // for ( let i = 0; i< posts.length; i++ );{
+        //     const temp = await Like.findAll({
+        //         where : { postId: posts[i].postId},
+        //     });
+        //     like.push(temp.length);
+        // };
         return { posts, like };
     };
     
