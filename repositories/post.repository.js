@@ -15,11 +15,11 @@ class PostRepository {
         //     });
         //     like.push(temp.length);
         // };
-        return { posts, like };
+        return { posts,like };
     };
     
     //게시글 상세조회
-    findOnePost = async (postId) => {
+    findOnePost = async (postId,userId) => {
         const detailPost = await Post.findOne({
             where : { id:postId },
             include:{
@@ -27,7 +27,8 @@ class PostRepository {
                 attributes:['nickname','profile','location'],
             }
         });
-        return detailPost
+        const LikeCheck = await Like.findAll({where:{userId,postId}})
+        return {detailPost, LikeCheck}
     };
 
     //게시글 생성

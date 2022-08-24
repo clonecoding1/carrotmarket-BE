@@ -1,4 +1,5 @@
 const PostRepository = require("../repositories/post.repository");
+const {Like} = require("../models")
 const bcrypt = require("bcrypt");
 
 class PostService {
@@ -33,20 +34,21 @@ class PostService {
     };
 
     //postId로 하나의 특정 게시글 반환
-    findOnePost = async (postId) => {
-        const findPostData = await this.postRepository.findOnePost(postId);
-        new Date(findPostData.createdAt);
+    findOnePost = async (postId,userId) => {
+        const {detailPost,LikeCheck} = await this.postRepository.findOnePost(postId,userId);
+        
         
         const post = {
-            postId : findPostData.id,
-            img : findPostData.img,
-            title : findPostData.title,
-            price : findPostData.price,
-            content : findPostData.content,
-            createdAt : new Date(findPostData.createdAt).getTime(),
-            nickname : findPostData.User.nickname,
-            profile : findPostData.User.profile,
-            location : findPostData.User.location
+            postId : detailPost.id,
+            img : detailPost.img,
+            title : detailPost.title,
+            price : detailPost.price,
+            content : detailPost.content,
+            createdAt : new Date(detailPost.createdAt).getTime(),
+            nickname : detailPost.User.nickname,
+            profile : detailPost.User.profile,
+            location : detailPost.User.location,
+            like : LikeCheck.length !==0
         };
         return{
             post,
