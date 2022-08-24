@@ -7,7 +7,7 @@ class PostRepository {
     findAllPost = async () =>{
         const posts = await Post.findAll({
         });
-        const like = [];
+        const like = await Like.findAll();
         
         // for ( let i = 0; i< posts.length; i++ );{
         //     const temp = await Like.findAll({
@@ -15,21 +15,31 @@ class PostRepository {
         //     });
         //     like.push(temp.length);
         // };
-        return { posts,like };
+        return { posts };
+    };
+    
+    //전체 게시글 조회 시 각 게시글 관심
+    findPostLike = async(postId) => {
+        const postLike = await Like.findAll({where : {postId}});
+        return postLike
     };
     
     //게시글 상세조회
-    findOnePost = async (postId,userId) => {
+    findOnePost = async (postId, userId) => {
         const detailPost = await Post.findOne({
-            where : { id:postId },
-            include:{
-                model:User,
-                attributes:['nickname','profile','location'],
-            }
+            where: { id: postId },
+            include: {
+                model: User,
+                attributes: ["nickname", "profile", "location"],
+                },
         });
-        const LikeCheck = await Like.findAll({where:{userId,postId}})
-        return {detailPost, LikeCheck}
-    };
+    
+        let LikeCheck = [];
+        if (userId) {
+        LikeCheck = await Like.findAll({ where: { userId, postId } });
+        }
+        return { detailPost, LikeCheck };
+        };
 
     //게시글 생성
     createPost = async ( img, title, content, price, userId,nickname) => {
