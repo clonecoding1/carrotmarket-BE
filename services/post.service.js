@@ -9,7 +9,7 @@ class PostService {
     findAllPost = async (userId) => {
         const allPost = await this.postRepository.findAllPost();
         
-        const Posts = allPost.posts.map((post, idx) => {
+        const Posts = allPost.posts.map((post) => {
             
             return {
                 postId: post.id,
@@ -19,14 +19,13 @@ class PostService {
                 createdAt: post.createdAt,
                 UserId : post.UserId,
                 nickname : post.nickname,
-                like: allPost.like[idx],
                 loginUserData : { userId
                 }
             };
         });
         Posts.sort((a, b) => {
-            return b.createdAt - a.createdAt;
-        });console.log(Posts)
+            return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+        });
         return {
             Posts, 
             status: 200,
