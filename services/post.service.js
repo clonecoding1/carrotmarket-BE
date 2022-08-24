@@ -8,7 +8,6 @@ class PostService {
     //모든 게시글 조회. 데이터를 가져와 반환
     findAllPost = async (userId) => {
         const allPost = await this.postRepository.findAllPost();
-        
         const Posts = allPost.posts.map((post) => {
             
             return {
@@ -19,6 +18,7 @@ class PostService {
                 createdAt: post.createdAt,
                 UserId : post.UserId,
                 nickname : post.nickname,
+                likecaunt : post.Likes.length,
                 loginUserData : { userId
                 }
             };

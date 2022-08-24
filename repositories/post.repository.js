@@ -6,6 +6,10 @@ class PostRepository {
     //전체 게시글 조회(메인페이지)
     findAllPost = async () =>{
         const posts = await Post.findAll({
+            include: {
+                model: Like,
+                attributes: ["UserId"],
+                },
         });
         const like = await Like.findAll();
         
