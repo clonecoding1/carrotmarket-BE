@@ -36,17 +36,16 @@ class MypageService {
     }
 
     likelist = async ( userId ) => {
-        const postlist = await this.mypageRepository.mypagelest( userId )
-        console.log(postlist)
-        const likelist = postlist.map(post => {
+        const postlists = await this.mypageRepository.likelist( userId )
+        const likelist = postlists.map(like => {
             return { likelist:{
-                postId: post.id,
-                img: post.img,
-                title: post.title,
-                price: post.price,
-                nickname: post.User.nickname,
-                location: post.User.location,
-                likeCount: post.Likes.length
+                postId: like.Post.id,
+                img: like.Post.img,
+                title: like.Post.title,
+                price: like.Post.price,
+                nickname: like.Post.nickname,
+                location: like.Post.User.location,
+                likeCount: like.Post.Likes.length
                 }
             }
         });

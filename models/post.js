@@ -24,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
     title: DataTypes.STRING,
     content: DataTypes.STRING,
     price: DataTypes.STRING,
-    nickname:DataTypes.STRING
+    nickname: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Post',
@@ -37,6 +37,7 @@ Post.associate = function (models) {
   });
   Post.hasMany(models.Like,{
     foreginkey:'id',
+    targetKey:"id",
     onDelete: 'cascade'
   });
 };
