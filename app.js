@@ -12,20 +12,21 @@ const { sequelize } = require("./models");
 app.use(express.json());
 app.use(cors());
 
-// const whitelist = ["http://localhost:3000" ];
-// const whitelist = ["http://prac-ye.s3-website.ap-northeast-2.amazonaws.com"];
+ const whitelist = ["http://localhost:3000" ]["http://somfist.shop.s3-website.ap-northeast-2.amazonaws.com"]["http://somfist.shop/"];
+ 
 
 
-// const corsOptions = {
-//     origin: function (origin, callback) {
-//     if (whitelist.indexOf(origin) !== -1) {
-//     callback(null, true);
-//     } else {
-//     console.log(origin);
-//     callback(new Error("NOT_ALLOWED_ORIGIN"));
-//     }
-//     },
-//     };
+
+const corsOptions = {
+    origin: function (origin, callback) {
+    if (whitelist.indexOf(origin) !== -1) {
+    callback(null, true);
+    } else {
+    console.log(origin);
+    callback(new Error("NOT_ALLOWED_ORIGIN"));
+    }
+    },
+    };
 //여기서 부터 롱 폴링
 // const pool = [];
 // function handlePoll(req,res) {
