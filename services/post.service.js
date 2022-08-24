@@ -18,7 +18,7 @@ class PostService {
                 createdAt: post.createdAt,
                 UserId : post.UserId,
                 nickname : post.nickname,
-                likecaunt : post.Likes.length,
+                likecount : post.Likes.length,
                 loginUserData : { userId
                 }
             };
