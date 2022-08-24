@@ -8,6 +8,7 @@ router.post("/signup", signupmiddleware, userController.signup);
 router.post("/login", signupmiddleware, userController.login);
 router.post("/checkemail", userController.checkemail);
 router.post("/checknickname", userController.checknickname);
+router.post("/kakao", userController.kakaologin);
 
 
 

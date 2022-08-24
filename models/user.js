@@ -28,14 +28,14 @@ module.exports = (sequelize, DataTypes) => {
     nickname: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: true,
     },
     password: {
       type: DataTypes.STRING,
       allowNull: false,
     },
     location: DataTypes.STRING,
-    profile: DataTypes.STRING
+    profile: DataTypes.STRING,
+    kakao: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'User',

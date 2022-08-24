@@ -74,6 +74,26 @@ class UserService {
     }
   };
 
+  kakaologin = async (email, nickname, profile, location) => {
+    const password = env.KAKAO_PW
+    const userInfo = await this.userRepository.kakaologin(email, password);
+    if (!userInfo){
+        const userInfo = await this.userRepository.kakaosignup(email, nickname, password, profile, location)
+        const payload = {
+          userId: userInfo.id,
+          nickname: userInfo.nickname,
+        };//유효 시간 
+        const token = jwt.sign(payload, env.SECRET_KEY);
+        return { status: 201, dete: token };
+    }else{
+        const payload = {
+          userId: userInfo.id,
+          nickname: userInfo.nickname,
+        };//유효 시간 
+        const token = jwt.sign(payload, env.SECRET_KEY);
+        return { status: 201, dete: token };
+    }
+  }
 };
 
 module.exports = UserService;
