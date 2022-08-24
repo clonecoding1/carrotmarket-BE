@@ -5,7 +5,8 @@ const bcrypt = require("bcrypt");
 class PostRepository {
     //전체 게시글 조회(메인페이지)
     findAllPost = async () =>{
-        const posts = await Post.findAll();
+        const posts = await Post.findAll({
+        });
         const like = [];
         
         // for ( let i = 0; i< posts.length; i++ );{
@@ -14,11 +15,11 @@ class PostRepository {
         //     });
         //     like.push(temp.length);
         // };
-        return { posts, like };
+        return { posts,like };
     };
     
     //게시글 상세조회
-    findOnePost = async (postId) => {
+    findOnePost = async (postId,userId) => {
         const detailPost = await Post.findOne({
             where : { id:postId },
             include:{
@@ -26,17 +27,20 @@ class PostRepository {
                 attributes:['nickname','profile','location'],
             }
         });
-        return detailPost
+        const LikeCheck = await Like.findAll({where:{userId,postId}})
+        return {detailPost, LikeCheck}
     };
 
     //게시글 생성
-    createPost = async ( img, title, content, price, userId) => {
+    createPost = async ( img, title, content, price, userId,nickname) => {
+
         const createPostData = await Post.create({
             img,
             title,
             content,
             price,
             UserId:userId,
+            nickname
         });
         return createPostData;
     };

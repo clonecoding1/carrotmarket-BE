@@ -8,7 +8,7 @@ class PostController{
     findAllPost = async (req, res) => {
         const { offset } = req.query;
         const { userId } = res.locals;
-        console.log(userId)
+        
         const allPost = await this.postService.findAllPost(userId);
         
         res.status(200).json({ allPost });
@@ -17,7 +17,7 @@ class PostController{
     //게시글 생성
     createPost = async (req, res) => {
         const { title,content,price,img } = req.body;
-        const { userId } = res.locals;
+        const { userId ,nickname} = res.locals;
         
         
         const createPostData = await this.postService.createPost(
@@ -26,6 +26,7 @@ class PostController{
             content,
             price,
             userId,
+            nickname
         );
         res.status(createPostData.status).json({ data: createPostData.msg })
     };
@@ -33,7 +34,8 @@ class PostController{
     //게시글 상세조회
     findOnePost = async (req, res, next) => {
         const { postId } = req.params;
-        const postData = await this.postService.findOnePost(Number(postId));
+        const { userId } = res.locals;
+        const postData = await this.postService.findOnePost(Number(postId),userId);
         console.log(postData)
         res.status(postData.status).json({ data: postData.post });
     };

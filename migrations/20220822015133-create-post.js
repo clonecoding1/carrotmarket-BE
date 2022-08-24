@@ -20,7 +20,7 @@ module.exports = {
       price: {
         type: Sequelize.STRING
       },
-      nickname: {
+      nickname:{
         type: Sequelize.STRING
       },
       createdAt: {

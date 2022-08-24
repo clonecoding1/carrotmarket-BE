@@ -1,4 +1,5 @@
 const PostRepository = require("../repositories/post.repository");
+const {Like} = require("../models")
 const bcrypt = require("bcrypt");
 
 class PostService {
@@ -8,7 +9,6 @@ class PostService {
     findAllPost = async (userId) => {
         const allPost = await this.postRepository.findAllPost();
         
-        console.log(userId)
         const Posts = allPost.posts.map((post, idx) => {
             
             return {
@@ -17,33 +17,38 @@ class PostService {
                 title: post.title,
                 price: post.price,
                 createdAt: post.createdAt,
-                // like: allPost.like[idx],
+                UserId : post.UserId,
+                nickname : post.nickname,
+                like: allPost.like[idx],
+                loginUserData : { userId
+                }
             };
         });
         Posts.sort((a, b) => {
             return b.createdAt - a.createdAt;
-        });
+        });console.log(Posts)
         return {
-            Posts,
+            Posts, 
             status: 200,
         };
     };
 
     //postId로 하나의 특정 게시글 반환
-    findOnePost = async (postId) => {
-        const findPostData = await this.postRepository.findOnePost(postId);
-        new Date(findPostData.createdAt);
+    findOnePost = async (postId,userId) => {
+        const {detailPost,LikeCheck} = await this.postRepository.findOnePost(postId,userId);
+        
         
         const post = {
-            postId : findPostData.id,
-            img : findPostData.img,
-            title : findPostData.title,
-            price : findPostData.price,
-            content : findPostData.content,
-            createdAt : new Date(findPostData.createdAt).getTime(),
-            nickname : findPostData.User.nickname,
-            profile : findPostData.User.profile,
-            location : findPostData.User.location
+            postId : detailPost.id,
+            img : detailPost.img,
+            title : detailPost.title,
+            price : detailPost.price,
+            content : detailPost.content,
+            createdAt : new Date(detailPost.createdAt).getTime(),
+            nickname : detailPost.User.nickname,
+            profile : detailPost.User.profile,
+            location : detailPost.User.location,
+            like : LikeCheck.length !==0
         };
         return{
             post,
@@ -51,13 +56,14 @@ class PostService {
         };
     };
     //게시글 생성
-    createPost =  async ( img, title, content, price,userId) => {
+    createPost =  async ( img, title, content, price,userId,nickname) => {
         await this.postRepository.createPost(
             img,
             title,
             content,
             price,
             userId,
+            nickname
         );
         return {
             status: 201,
