@@ -50,7 +50,18 @@ class UserController {
         }
     };
 
-
+    kakaologin = async (req, res, next) => {
+        const { email, nickname, profile, location } = req.body;
+        try {
+            const result = await this.userService.kakaologin(email, nickname, profile, location);
+            if (result.status === 201) {
+                return res.status(result.status).json(result.dete);
+            }
+            return res.status(result.status).send(result.message);
+        } catch {
+            return res.status(400).json("알 수 없는 오류");
+        }
+    };
 }
 
 module.exports = UserController;

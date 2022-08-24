@@ -20,6 +20,9 @@ class MypageService {
 
     mypage = async ( userId ) => {
         const postlist = await this.mypageRepository.mypagelest( userId )
+        postlist.sort((a, b) => {
+            return b.createdAt - a.createdAt;
+        });
         const mypage = postlist.map(post => {
             return { mypage:{
                 postId: post.id,
@@ -37,6 +40,9 @@ class MypageService {
 
     likelist = async ( userId ) => {
         const postlists = await this.mypageRepository.likelist( userId )
+        postlists.sort((a, b) => {
+            return b.createdAt - a.createdAt;
+        });
         const likelist = postlists.map(like => {
             return { likelist:{
                 postId: like.Post.id,

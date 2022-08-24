@@ -32,7 +32,8 @@ class UserService {
     if (!email || !password) {
       return { status: 400, message: "email, password중에 입력값이 비어 있습니다." }
     }
-    const userInfo = await this.userRepository.login(email);
+    const passwords = bcrypt.hashSync(password, 10);
+    const userInfo = await this.userRepository.login(email, passwords);
     if (!userInfo) {
       return { status: 400, message: "아이디 혹은 비밀번호가 일치하지 않습니다." }
     } else {
@@ -74,6 +75,27 @@ class UserService {
     }
   };
 
+  kakaologin = async (email, nickname, profile, location) => {
+    const password = env.KAKAO_PW
+    const passwords = bcrypt.hashSync(password, 10);
+    const userInfo = await this.userRepository.login(email, passwords);
+    if (!userInfo){
+      const userInfo = await this.userRepository.kakaosignup(email, nickname, passwords, profile, location)
+      const payload = {
+        userId: userInfo.id,
+        nickname: userInfo.nickname,
+      };//유효 시간 
+      const token = jwt.sign(payload, env.SECRET_KEY);
+      return { status: 201, dete: token };
+    }else{
+      const payload = {
+        userId: userInfo.id,
+        nickname: userInfo.nickname,
+      };//유효 시간 
+      const token = jwt.sign(payload, env.SECRET_KEY);
+      return { status: 201, dete: token };
+    }
+  }
 };
 
 module.exports = UserService;
