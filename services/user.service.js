@@ -16,12 +16,11 @@ class UserService {
     if (!profile || !location) {
       return { status: 400, message: "profile, location중에 입력값이 비어 있습니다." }
     }
-    const passwords = await bcrypt.hashSync(password, 10);
+    const passwords = bcrypt.hashSync(password, 10);
     try {
       await this.userRepository.signup(email, nickname, passwords, profile, location);
-
     } catch {
-      return { status: 400, message: "db에 유저정보 생성에 실패했습니다." }
+      return { status: 400, message: "db생성에 실패했습니다.//email nickname 중복확인 되었나?" }
     }
     return { status: 201, message: "회원가입이 완료되었습니다." }
   };

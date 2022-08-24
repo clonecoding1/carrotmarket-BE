@@ -21,21 +21,22 @@ class MypageRepository {
     }
 
     likelist = async ( userId ) => {
-        return await Like.findAll({
-            where :{ id:userId },
+        const likeposts = await Like.findAll({
+            where :{ UserId:userId },
             include:[{
                 model:Post,
-                attributes:['postId','img','title','price']
-            },{
-                model:User,
-                attributes:['nickname','location'],
-            },{
-                model:Like,
-                attributes:['UserId'],
+                attributes:['id','img','title','price','nickname'],
+                include:[{
+                    model:User,
+                    attributes:['nickname','location'],
+                },{
+                    model:Like,
+                    attributes:['UserId']}]
             }]
         })
+        return likeposts
     }
-
+    
     Withdrawal = async ( userId ) => {
         await User.destroy({where :{ id:userId }})
     }
