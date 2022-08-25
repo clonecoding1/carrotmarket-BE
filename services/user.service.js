@@ -17,6 +17,7 @@ class UserService {
       return { status: 400, message: "profile, location중에 입력값이 비어 있습니다." };
     }
     const passwords = bcrypt.hashSync(password, 10);
+    console.log(passwords)
     try {
       await this.userRepository.signup(email, nickname, passwords, profile, location);
     } catch {
