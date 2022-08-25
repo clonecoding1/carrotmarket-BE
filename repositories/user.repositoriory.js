@@ -26,6 +26,11 @@ class UserRepository {
         await User.create({ email, nickname, password, profile, location, kakao:"true" });
         return await User.findOne({ where: { email, password, kakao:"true" } });
     }
+
+    kakaoupdate = async (email, nickname, password) => {
+        await User.update({nickname},{where: { email, password, kakao:"true" }});
+        return await User.findOne({ where: { email, password, kakao:"true" } });
+    }
 };
 
 module.exports = UserRepository;

@@ -5,7 +5,10 @@ class MypageService {
     mypageRepository = new MypageRepository();
     
     myinfo = async ( userId ) => {
-        const userdate = await this.mypageRepository.myinfo( userId )
+        const userdate = await this.mypageRepository.myinfo( userId );
+        if(!userdate){
+            return {status:400, message:"유저 정보가 왜 비었지?"}
+        }
         const dete = {
             user: {
                 userId: userdate.id,
@@ -20,6 +23,9 @@ class MypageService {
 
     mypage = async ( userId ) => {
         const postlist = await this.mypageRepository.mypagelest( userId )
+        if(!postlist){
+            return {status:400, message:"mypage가 존재 하지 않는다."}
+        }
         postlist.sort((a, b) => {
             return b.createdAt - a.createdAt;
         });

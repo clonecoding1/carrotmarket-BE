@@ -11,6 +11,4 @@ router.get("/likelist", mypageController.likelist);
 router.delete("/mypage", mypageController.Withdrawal);
 router.post("/like/:postId", mypageController.like);
 
-
-
 module.exports = router;
