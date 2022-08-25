@@ -8,6 +8,7 @@ class PostService {
     //모든 게시글 조회. 데이터를 가져와 반환
     findAllPost = async (userId) => {
         const allPost = await this.postRepository.findAllPost();
+        console.log(allPost.posts)
         const Posts = allPost.posts.map((post) => {
             
             return {
@@ -44,6 +45,7 @@ class PostService {
             price : detailPost.price,
             content : detailPost.content,
             createdAt : new Date(detailPost.createdAt).getTime(),
+            userId: detailPost.user.userId,
             nickname : detailPost.User.nickname,
             profile : detailPost.User.profile,
             location : detailPost.User.location,
@@ -75,29 +77,31 @@ class PostService {
     deletePost = async (postId,password,userId) => {
         const checkPw =await this.postRepository.checkPw(postId,password)
         console.log(checkPw)
-        console.log(postId)
+        
+        console.log(checkPw.userId,userId)
+        const isSame = bcrypt.compareSync(password, checkPw.checkPw);
         if (postId === null){
             return {
                 status:400,
                 msg:"게시글이 존재하지 않습니당근."
             };
         };
-        if (postId !== userId){
+        if (checkPw.userId !== userId){
             return {
                 status:400,
                 msg:"본인 게시글이 아닙니당근."
             };
         };
-        if (checkPw.checkPw !== password){
+        if (!isSame){
             return {
                 status:400,
-                msg:"비밀번호가 회원정보와 일치하지 않습니당근."
+                msg:"비밀번호가 일치하지 않습니당근."
             };
         };
 
 
         
-        //const destroy =  await this.postRepository.deletePost( postId, password );
+        const destroy =  await this.postRepository.deletePost( postId, password );
         if (destroy === 0) {
             return {status:400, msg:"알수없는 에러(feat.용성령)"}
         };
