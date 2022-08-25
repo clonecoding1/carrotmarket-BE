@@ -52,7 +52,6 @@ class UserController {
 
     kakaologin = async (req, res, next) => {
         const { email, nickname, profile, location } = req.body;
-        console.log(email, nickname, profile, location)
         try {
             const result = await this.userService.kakaologin(email, nickname, profile, location);
             if (result.status === 201) {
