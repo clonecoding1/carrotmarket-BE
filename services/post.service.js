@@ -43,7 +43,7 @@ class PostService {
             title : detailPost.title,
             price : detailPost.price,
             content : detailPost.content,
-            createdAt : new Date(detailPost.createdAt).getTime(),
+            createdAt : detailPost.createdAt,
             userId: detailPost.UserId,
             nickname : detailPost.User.nickname,
             profile : detailPost.User.profile,
