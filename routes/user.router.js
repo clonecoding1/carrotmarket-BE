@@ -10,6 +10,4 @@ router.post("/checkemail", userController.checkemail);
 router.post("/checknickname", userController.checknickname);
 router.post("/kakao", userController.kakaologin);
 
-
-
 module.exports = router;
