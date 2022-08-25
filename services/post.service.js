@@ -44,7 +44,7 @@ class PostService {
             price : detailPost.price,
             content : detailPost.content,
             createdAt : new Date(detailPost.createdAt).getTime(),
-            userId: detailPost.User.id,
+            userId: detailPost.UserId,
             nickname : detailPost.User.nickname,
             profile : detailPost.User.profile,
             location : detailPost.User.location,
