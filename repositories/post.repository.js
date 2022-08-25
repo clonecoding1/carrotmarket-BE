@@ -12,13 +12,6 @@ class PostRepository {
                 },
         });
         const like = await Like.findAll();
-        
-        // for ( let i = 0; i< posts.length; i++ );{
-        //     const temp = await Like.findAll({
-        //         where : { postId: posts[i].postId},
-        //     });
-        //     like.push(temp.length);
-        // };
         return { posts };
     };
     
