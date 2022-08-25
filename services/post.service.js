@@ -8,7 +8,6 @@ class PostService {
     //모든 게시글 조회. 데이터를 가져와 반환
     findAllPost = async (userId) => {
         const allPost = await this.postRepository.findAllPost();
-        console.log(allPost.posts)
         const Posts = allPost.posts.map((post) => {
             
             return {
@@ -45,7 +44,7 @@ class PostService {
             price : detailPost.price,
             content : detailPost.content,
             createdAt : new Date(detailPost.createdAt).getTime(),
-            userId: detailPost.user.userId,
+            userId: detailPost.User.id,
             nickname : detailPost.User.nickname,
             profile : detailPost.User.profile,
             location : detailPost.User.location,
@@ -76,9 +75,6 @@ class PostService {
     //게시글 삭제
     deletePost = async (postId,password,userId) => {
         const checkPw =await this.postRepository.checkPw(postId,password)
-        console.log(checkPw)
-        
-        console.log(checkPw.userId,userId)
         const isSame = bcrypt.compareSync(password, checkPw.checkPw);
         if (postId === null){
             return {
